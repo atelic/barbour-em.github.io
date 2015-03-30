@@ -4,7 +4,6 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic');
 
 
-
 /*===================================
 =            BASE STYLES            =
 ===================================*/
@@ -38,9 +37,6 @@ a {
     transform: translate(-50%, -50%);
 }
 
-
-
-
 /*=============================
 =            CARDS            =
 =============================*/
@@ -67,12 +63,6 @@ section h2 {
     margin-bottom: 50px;
 }
 
-
-
-
-
-
-
 /*======================================
 =            CALL TO ACTION            =
 ======================================*/
@@ -93,10 +83,6 @@ section h2 {
     color: #444;
 }
 
-
-
-
-
 /*=============================
 =            ABOUT            =
 =============================*/
@@ -109,19 +95,21 @@ section h2 {
 }
 
 
-
 /*================================
 =            SERVICES            =
 ================================*/
 #services .wrap {
     padding: 100px 0;
-    background-position: 50% 0;
+    /* Uncomment for using full size image instead of a color */
+   /* background-position: 50% 0;
     background-repeat: no-repeat;
     background-image: url('http://placekitten.com/1500/1000');
     background-color: orange;
     -webkit-background-size: cover;
     -moz-background-size: cover;
-    background-size: cover;
+    background-size: cover;*/
+    background: rgb(177, 106, 255)
+
 }
 #services .wrap:before {
     position: absolute;
@@ -137,9 +125,6 @@ section h2 {
 }
 #services h2, #services h3, #services p { color: #fff; }
 
-
-
-
 /*============================
 =            WORK            =
 ============================*/
@@ -149,10 +134,6 @@ section h2 {
 }
 #work h2, #work h3, #work p { color: #fff; }
 
-
-
-
-
 /*===============================
 =            CONTACT            =
 ===============================*/
@@ -160,20 +141,12 @@ section h2 {
     background: #00FF9E;
 }
 
-
-
-
 /*==============================
 =            FOOTER            =
 ==============================*/
 #footer .wrap { background: #222; }
 #footer h2 { color: #fff; }
 .fa { margin: 25px;}
-
-
-
-
-
 
 
 /*=====================================
