@@ -1,5 +1,8 @@
 # Site navigation links
 
+- title: Home
+  url: /
+  
 - title: Portfolio
   url: /folio/
 

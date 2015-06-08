@@ -19,14 +19,14 @@ body {
 
 
 // COLORS =====================================================
-$body-color         : #fff;
+$body-color         : #ebebeb;
 $text-color         : #222;
 $base-color         : #343434;    
 $comp-color         : spin($base-color, 180); 
 $border-color       : #ddd;
 $white              : #fff;
-$black              : #000;
-$accent-color       : $black;
+$black              : #008080;
+$accent-color       : #008080;
 $link-color         : #222;
 
 $table-border-color           : $border-color;
