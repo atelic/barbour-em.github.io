@@ -1,0 +1,13 @@
+# Site navigation links
+
+- title: Portfolio
+  url: /folio/
+
+- title: Articles
+  url: /articles/
+
+- title: Blog
+  url: /blog/
+
+- title: Search
+  url: /search/
