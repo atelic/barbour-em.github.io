@@ -8,7 +8,8 @@ relative_permalinks: true
 title:               Barbour
 tagline:             'Personal blog'
 description:         'Whatever comes to mind'
-baseurl:             'http://barbour-em.github.io/'
+url: 				 http://barbour-em.github.io
+baseurl: 			 ""
 paginate:            5
 
 
