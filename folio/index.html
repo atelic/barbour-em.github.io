@@ -56,7 +56,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
     <link rel="stylesheet" href="style.css">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   </head>
   <body>
 
@@ -65,7 +65,7 @@
       <div class="wrap">
         <div class="super-center">
           <h1>Eric Barbour</h1>
-          <p>UVA Student | emb4gu@virginia.edu</p>
+          <p>UVA Student | Web Developer</p>
         </div>
       </div>
     </section>
@@ -191,7 +191,7 @@
 
     <section id="contact">
       <div class="wrap">
-        <form action="//formspree.io/emb4gu@virginia.edu" method="POST" class="super-center">
+        <form id="contact-form" method="POST" class="super-center">
           <h2>Contact</h2>
           <div class="form-group">
             <label for="inputEmail">Email address</label>
@@ -221,9 +221,15 @@
       </div>
     </section>
 
+	<script>
+	  $(function(){
+		  var base64_email = 'ZW1iNGd1QHZpcmdpbmlhLmVkdQ==';
+		  var base_url = '//formspree.io/';
+		  var action = base_url + atob(base64_email);
+		  $('#contact-form').attr('action', action)
+	  })
 
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	</script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.14.2/TweenMax.min.js"></script>
     <script src="https://cdn.rawgit.com/janpaepke/ScrollMagic/master/js/jquery.scrollmagic.min.js"></script>
