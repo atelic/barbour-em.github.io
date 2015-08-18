@@ -1,0 +1,2 @@
+* A dark and light css theme to style rendered HTML from org export
+All credit to [[https://thomasf.github.io/solarized-css/][thomasf]] for the [[https://github.com/thomasf/solarized-css][css]], this is just rehosting in case he takes his site down.

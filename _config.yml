@@ -6,11 +6,11 @@ relative_permalinks: true
 
 # Setup
 title:               Eric Barbour
-tagline:             ''
-description:         'Whatever comes to mind'
-url: 				 http://barbour-em.github.io
-baseurl: 			 ""
-paginate:            5
+tagline:             '(or (emacs) (dev))'
+description:         'Bloggings about Emacs and software/web development. I generally talk about Linux, elisp, python, and javascript'
+url:                 http://barbour-em.github.io
+baseurl:             ""
+paginate:            4
 
 
 # About/contact
@@ -20,4 +20,4 @@ author:
   email:             emb4gu@virginia.edu
 
 # Custom vars
-version:             1.0.0
+version:             1.1.0
