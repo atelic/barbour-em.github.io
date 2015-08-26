@@ -2,12 +2,14 @@
 layout: post
 title: Instant text file syncing
 comments: true
+excerpt_separator: <!--more-->
 url: /sycing-dropbox
 ---
 
 # Sync plain text files through Dropbox outside of the ~/Dropbox folder
 I love using [Org-mode](http://orgmode.org/), a plain text outlining and task management envrionment/tool/lifestyle. As such, I typically have a `~/org/` directory on all of my machines which pretty much contains all of my life in them. In the past, I have generally kept them in sync by keeping them as a git repository pushing and pulling changes. This became problematic quickly; sometimes before leaving work I would forget to commit and push my changes from the day and my files at home are out of date. That's when I came up with this solution.
 
+<!--more-->
 ## What
 This method uses Dropbox, a tool I was using anyway, to instantly sync files that I want to keep out of the `~/Dropbox` folder. In order to do this, I use symlinks from the external file or folder to `~/Dropbox/some/path`. Then, when any change is made to the symlinked directory, changes will be monitored and synced through to all other machines.
 

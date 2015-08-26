@@ -6,7 +6,6 @@ url: /ko-render-template
 ---
 
 # Knockout's renderTemplate method
-
 Knockoutjs supplies a `renderTemplate` method, a way to dynamically generate this HTML at runtime and also data bind it to a separate view model. Unfortunately, this handy function is embarassingly underdocumented. [This](http://aboutcode.net/2012/11/15/twitter-bootstrap-modals-and-knockoutjs.html) blog post does a good job of explaining its use but it covers a rather specific use case and can be information overload when learning about this function for the first time.
 
 ### `renderTemplate` takes five parameters:
