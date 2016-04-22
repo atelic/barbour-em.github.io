@@ -1,15 +1,9 @@
----
-layout: post
-title: One Stop Dev Shop pt. 1
-comments: true
-url: /dev-env-1
----
++++
+date = "2015-07-08"
+draft = false
+title = "One Stop Dev Shop pt. 1"
 
----
-*This post is part 1 in a series of posts I am writing about maintaining a consistent and portable
-development envrionment across unix-like machines.*
-
----
++++
 
 # Part one: Everything in one place
 A **lot** of time and effort goes into creating a development environment that is productive and allows you to get down to work.
@@ -36,7 +30,7 @@ Clone this repository on all of your machines. Push and pull from it when change
 For files that will have to live outside of the cloned repository (e.g. .vimrc, .tmux.conf, etc), the easiest way to keep these version controlled is symlinking them from
 your repo, to where they have to reside. For example:
 
-```
+```bash
 $ ln -s $HOME/dotfiles/.vimrc $HOME/.vimrc
 ```
 
@@ -79,5 +73,7 @@ I recommend that you take a look at what your commits usually, or should, look l
 productive!
 
 ---
-Thats it for part one. I'd love to hear any awesome git aliases or time saving tricks you all have.
-Stay tuned for more posts in this series
+*This post is part 1 in a series of posts I am writing about maintaining a consistent and portable
+development envrionment across unix-like machines.*
+
+---
