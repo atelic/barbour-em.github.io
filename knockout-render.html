@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Using Knockoutjs' renderTemplate method — Atelic | Eric Barbour</title>
+	<meta name="description" content="Title: Using Knockoutjs' renderTemplate method; Date: 2015-08-19; Author: Eric Barbour">
+	<meta name="author" content="Eric Barbour">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="http://barbour-em.github.io/theme/html5.js"></script>
+		<![endif]-->
+	<link href="http://barbour-em.github.io/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+	<link href="http://barbour-em.github.io/theme/css/local.css" rel="stylesheet">
+	<link href="http://barbour-em.github.io/theme/css/pygments.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="http://barbour-em.github.io/">Atelic | Eric Barbour</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">Using Knockoutjs' renderTemplate method</h1>
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+			<h4 itemprop="name">Eric Barbour</h4>
+		</span>
+		<time datetime="2015-08-19T00:00:00-04:00" itemprop="datePublished">Wed 19 August 2015</time>
+	</div>
+	<div>
+		Category:
+		<span itemprop="articleSection">
+			<a href="http://barbour-em.github.io/category/development.html" rel="category">Development</a>
+		</span>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			<a href="http://barbour-em.github.io/tag/knockout.html" rel="tag">knockout</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="http://barbour-em.github.io/tag/javascript.html" rel="tag">javascript</a>
+		</span>
+	</div>
+	<div itemprop="articleBody" class="article-body"><h1>Knockout's renderTemplate method</h1>
+<p>Knockoutjs supplies a <code>renderTemplate</code> method, a way to dynamically generate this HTML at runtime and also data bind it to a separate view model. Unfortunately, this handy function is embarassingly underdocumented. <a href="http://aboutcode.net/2012/11/15/twitter-bootstrap-modals-and-knockoutjs.html">This</a> blog post does a good job of explaining its use but it covers a rather specific use case and can be information overload when learning about this function for the first time.</p>
+<h3><code>renderTemplate</code> takes five parameters:</h3>
+<dl>
+<dt>templateName</dt>
+<dd>The ID of the template to render</dd>
+<dt>viewModel</dt>
+<dd>The view model to data bind to the template</dd>
+<dt>options</dt>
+<dd>Additional options passed to the rendering engine. We'll be providing an afterRender callback here.</dd>
+<dt>target</dt>
+<dd>Where to render the template, such as a <div> element.</dd>
+<dt>renderMode</dt>
+<dd>When this is "replaceNode" the target element is replaced with the rendered output.</dd>
+<dd>The rendered elements do not necessarily appear in the DOM immediately.</dd>
+</dl>
+<h2>Use</h2>
+<p>Using <code>renderTemplate</code> requires two things:</p>
+<ul>
+<li>A <code>&lt;script type="text/html"&gt;</code> tag with an id.</li>
+<li>A call to <code>ko.renderTemplate</code> somewhere in your JS.</li>
+</ul>
+<h3>A simple example</h3>
+<ul>
+<li>Our simple template</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;uniqueTemplateId&quot;</span><span class="p">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">textarea</span> <span class="nx">data</span><span class="o">-</span><span class="nx">bind</span><span class="o">=</span><span class="s2">&quot;textInput: value&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;form-control&quot;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="err">/textarea&gt;</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+
+
+<ul>
+<li>Rendering this template in ko</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="nx">ko</span><span class="p">.</span><span class="nx">renderTemplate</span><span class="p">(</span>
+    <span class="c1">// templateName</span>
+    <span class="s1">&#39;uniqueTemplateId&#39;</span><span class="p">,</span>
+    <span class="c1">// ViewModel</span>
+    <span class="c1">// just an empty object</span>
+    <span class="p">{},</span>
+    <span class="c1">// Options</span>
+    <span class="p">{},</span>
+    <span class="c1">// target</span>
+    <span class="k">this</span>
+<span class="p">);</span>
+</pre></div>
+
+
+<p>Here, we create a simple textarea template that is called and bound to no ViewModel and passed no options. This is great for simple use cases such as rendering some html in a <code>bootbox</code> modal.</p>
+<h3>A more complex example</h3>
+<ul>
+<li>A template for a comment input</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;comment&quot;</span><span class="p">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;input-group&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">input</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;form-control registration-editor-comment&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nx">data</span><span class="o">-</span><span class="nx">bind</span><span class="o">=</span><span class="s2">&quot;value: nextComment, valueUpdate: &#39;keyup&#39;&quot;</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="nx">span</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;input-group-btn&quot;</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">button</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;btn btn primary&quot;</span> <span class="nx">data</span><span class="o">-</span><span class="nx">bind</span><span class="o">=</span><span class="s2">&quot;click: $data.addComment,</span>
+<span class="s2">                                                 enable: $data.allowAddNext&quot;</span><span class="o">&gt;</span>
+        <span class="nx">Add</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
+    <span class="o">&lt;</span><span class="err">/span&gt;</span>
+  <span class="o">&lt;</span><span class="err">/div&gt;</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+
+
+<ul>
+<li>Rendering this</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">Comment</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">ko</span><span class="p">.</span><span class="nx">observable</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// ...</span>
+
+<span class="nx">ko</span><span class="p">.</span><span class="nx">renderTemplate</span><span class="p">(</span>
+    <span class="c1">// templateName</span>
+    <span class="s1">&#39;comment&#39;</span><span class="p">,</span>
+    <span class="c1">// viewModel</span>
+    <span class="nx">Comment</span><span class="p">,</span>
+    <span class="c1">// options</span>
+    <span class="p">{</span>
+      <span class="nx">afterRender</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">nodes</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// resolve some deferred element</span>
+      <span class="c1">// or make a call to save the comment</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="c1">// target</span>
+    <span class="k">this</span>
+<span class="p">)</span>
+</pre></div>
+
+
+<p>In this example, we bind the comment template to <code>Comment</code> viewModel, and pass <code>renderTemplate</code> an afterRender option that could resolve some deferred element, make some call, or do what ever needs to happen when this template renders.</p>
+<hr />
+<p>That sould be all the information you need to start using <code>renderTemplate</code>. I definitely recommend reading the blog post I mentioned above. It provieds loads of information and much more nuanced examples.</p></div>
+	<hr>
+	<h2>Comments</h2>
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://barbour-em.github.io">Atelic | Eric Barbour</a></li>
+							<li><a href="http://barbour-em.github.io/feeds/all.atom.xml" type="application/atom+xml"><i class="fa fa-rss "></i> atom</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Author</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="mailto:&#101;&#098;&#097;&#114;&#098;&#111;&#117;&#114;&#064;&#114;&#101;&#100;&#104;&#097;&#116;&#046;&#099;&#111;&#109;">Eric Barbour</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Categories</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://barbour-em.github.io/category/Dev-Env-Series.html">Dev Env Series (2)</a></li>
+							<li><a href="http://barbour-em.github.io/category/Development.html">Development (1)</a></li>
+							<li><a href="http://barbour-em.github.io/category/Productivity.html">Productivity (1)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Links</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://barbour-em.github.io">My portfolio</a></li>
+							<li><a href="https://github.com/barbour-em">Github</a></li>
+							<li><a href="http://twitter.com/Ebarbour22">Twitter</a></li>
+							<li><a href="">Linkedin</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Eric Barbour 2014</p>
+			<p>Powered by Pelican</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>

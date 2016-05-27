@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>One Stop Dev Shop pt. 1 — Atelic | Eric Barbour</title>
+	<meta name="description" content="Title: One Stop Dev Shop pt. 1; Date: 2015-08-18; Author: Eric Barbour">
+	<meta name="author" content="Eric Barbour">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="http://barbour-em.github.io/theme/html5.js"></script>
+		<![endif]-->
+	<link href="http://barbour-em.github.io/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+	<link href="http://barbour-em.github.io/theme/css/local.css" rel="stylesheet">
+	<link href="http://barbour-em.github.io/theme/css/pygments.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="http://barbour-em.github.io/">Atelic | Eric Barbour</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">One Stop Dev Shop pt. 1</h1>
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+			<h4 itemprop="name">Eric Barbour</h4>
+		</span>
+		<time datetime="2015-08-18T00:00:00-04:00" itemprop="datePublished">Tue 18 August 2015</time>
+	</div>
+	<div>
+		Category:
+		<span itemprop="articleSection">
+			<a href="http://barbour-em.github.io/category/dev-env-series.html" rel="category">Dev Env Series</a>
+		</span>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			<a href="http://barbour-em.github.io/tag/devshop.html" rel="tag">devshop</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="http://barbour-em.github.io/tag/git.html" rel="tag">git</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="http://barbour-em.github.io/tag/syncing.html" rel="tag">syncing</a>
+		</span>
+	</div>
+	<div itemprop="articleBody" class="article-body"><h1>Part one: Everything in one place</h1>
+<p>A <strong>lot</strong> of time and effort goes into creating a development environment that is productive and allows you to get down to work.
+Things get even more complicated when working on more than one machine. The goal of this series is to give you tips and a starting place for a unified environment.</p>
+<p>I recently started a position where a Mac was provided and, after working exclusively on a GNU/Linux system,
+I needed to have a config that I could seemlessly use between both machines. So I started building my portable Unix dev environemnt.
+I wanted to share what goes into creating a complete and portable</p>
+<h2>Git</h2>
+<p>Git is intergal to almost every development team or company these days --- side note if you're not using version control yet, do it now, <em>seriously</em> ---
+and it's what holds this environment together for a number of reasons.</p>
+<ul>
+<li>Anything you will be working on with more than one computer needs to be in <code>git</code>. Then just <code>git push</code> from one and <code>git pull</code> from the next and you're back to work. Done. Next.</li>
+<li>Git is makes this system work. You need to have a way to have all your config files easily accessable and sync-able across machines. Git is that way.</li>
+</ul>
+<h3>Use a central repository</h3>
+<p>"Dotfile" repos are a common convention for developers to maintain a single place for config files.
+However, they can be a lot more useful than that. <a href="https://github.com/barbour-em/dotfiles">Mine</a> holds things like wallpapers, screenshots, and various reminders about
+using some Unix tools. Determine what will be useful or convenient for you to have everywhere and throw it in there.</p>
+<p>Clone this repository on all of your machines. Push and pull from it when changes are made. <strong>How easy was that?</strong></p>
+<p>For files that will have to live outside of the cloned repository (e.g. .vimrc, .tmux.conf, etc), the easiest way to keep these version controlled is symlinking them from
+your repo, to where they have to reside. For example:</p>
+<div class="highlight"><pre><span></span>$ ln -s <span class="nv">$HOME</span>/dotfiles/.vimrc <span class="nv">$HOME</span>/.vimrc
+</pre></div>
+
+
+<p>All this means for you is that you will need to remember to commit and push these changes every once in a while to keep things up to date. Better yet, use a cron job to
+systematically do this for you.</p>
+<h3>Configure git</h3>
+<p>Okay, so we have all of our configurations and anything we want under git --- if you don't have any configs, don't worry, by the end of this post you will --- but let's
+customize this tool we will be using a lot to make it even faster to use.</p>
+<h4>Aliases</h4>
+<p>A lot of my day is spent working directly with git. At my shop, we use a <a href="https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow">git-flow</a>
+workflow which, for me, means a lot of branching, merging, commiting, and rebasing. Because of this, I find myself typing a lot of commands many, many times a day.
+Luckily, with git there is a way to cut down on the amount of typing you have to do to get stuff done.</p>
+<p>Aliases are a <em>huge</em> time-saver for my workflow. Here is my global <code>.gitconfig</code> with a list of all the aliases I use.</p>
+<script src="https://gist.github.com/barbour-em/f13eab896dffca8c28b9.js"></script>
+
+<p>The biggest ones are</p>
+<ul>
+<li><code>undo</code> which reverts the last commit and is a lot easier to remember</li>
+<li><code>up</code> which combines some of my most typed commands into two letters to update a branch</li>
+<li><code>ls</code> which shows the log in a much nicer format and also takes a number of lines to stop (i.e. <code>git ls -10</code> will show the last 10 commits)<ul>
+<li>This still doesn't beat <a href="https://github.com/jonas/tig">tig</a>, an awesome ncurses git interface that I would recommend to anyone</li>
+</ul>
+</li>
+</ul>
+<h4>Commit template</h4>
+<p>In my <code>.gitconfig</code> above, you'll also notice a commit template. This is something that I learned about recently but has already saved me a huge amount of time writing
+commit messages. Pretty commits are important, and often necessary depending on who you're contributing to, and setting up a template that encourages this behavior
+and has boilerplate written makes things a lot easier. Here is what my template looks like.</p>
+<script src="https://gist.github.com/barbour-em/3b40a805c431a42b6181.js"></script>
+
+<p>Removing the octothorp (#) from the beginning of a line will make it show up in the commit and different commit stubs are already there. Just remove the comment,
+add a description, add a body below the line and boom. There are also guides for line length wraps for both halves.</p>
+<p>I recommend that you take a look at what your commits usually, or should, look like and write one for yourself. Then, throw it in your <code>dotfiles</code> push and start being more
+productive!</p>
+<hr />
+<p><em>This post is part 1 in a series of posts I am writing about maintaining a consistent and portable
+development envrionment across unix-like machines.</em></p>
+<hr /></div>
+	<hr>
+	<h2>Comments</h2>
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://barbour-em.github.io">Atelic | Eric Barbour</a></li>
+							<li><a href="http://barbour-em.github.io/feeds/all.atom.xml" type="application/atom+xml"><i class="fa fa-rss "></i> atom</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Author</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="mailto:&#101;&#098;&#097;&#114;&#098;&#111;&#117;&#114;&#064;&#114;&#101;&#100;&#104;&#097;&#116;&#046;&#099;&#111;&#109;">Eric Barbour</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Categories</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://barbour-em.github.io/category/Dev-Env-Series.html">Dev Env Series (2)</a></li>
+							<li><a href="http://barbour-em.github.io/category/Development.html">Development (1)</a></li>
+							<li><a href="http://barbour-em.github.io/category/Productivity.html">Productivity (1)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Links</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://barbour-em.github.io">My portfolio</a></li>
+							<li><a href="https://github.com/barbour-em">Github</a></li>
+							<li><a href="http://twitter.com/Ebarbour22">Twitter</a></li>
+							<li><a href="">Linkedin</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Eric Barbour 2014</p>
+			<p>Powered by Pelican</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>

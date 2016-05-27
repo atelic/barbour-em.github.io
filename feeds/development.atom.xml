@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Atelic | Eric Barbour</title><link href="http://barbour-em.github.io/" rel="alternate"></link><link href="http://barbour-em.github.io/feeds/development.atom.xml" rel="self"></link><id>http://barbour-em.github.io/</id><updated>2016-05-27T00:00:00-04:00</updated><entry><title>Using Knockoutjs' renderTemplate method</title><link href="http://barbour-em.github.io/knockout-render.html" rel="alternate"></link><published>2016-05-27T00:00:00-04:00</published><author><name>Eric Barbour</name></author><id>tag:barbour-em.github.io,2015-08-19:knockout-render.html</id><summary type="html">&lt;h1&gt;Knockout's renderTemplate method&lt;/h1&gt;
+&lt;p&gt;Knockoutjs supplies a &lt;code&gt;renderTemplate&lt;/code&gt; method, a way to dynamically generate this HTML at runtime and also data bind it to a separate view model. Unfortunately, this handy function is embarassingly underdocumented. &lt;a href="http://aboutcode.net/2012/11/15/twitter-bootstrap-modals-and-knockoutjs.html"&gt;This&lt;/a&gt; blog post does a good job of explaining its use but it covers a rather specific use case and can be information overload when learning about this function for the first time.&lt;/p&gt;
+&lt;h3&gt;&lt;code&gt;renderTemplate&lt;/code&gt; takes five parameters:&lt;/h3&gt;
+&lt;dl&gt;
+&lt;dt&gt;templateName&lt;/dt&gt;
+&lt;dd&gt;The ID of the template to render&lt;/dd&gt;
+&lt;dt&gt;viewModel&lt;/dt&gt;
+&lt;dd&gt;The view model to data bind to the template&lt;/dd&gt;
+&lt;dt&gt;options&lt;/dt&gt;
+&lt;dd&gt;Additional options passed to the rendering engine. We'll be providing an afterRender callback here.&lt;/dd&gt;
+&lt;dt&gt;target&lt;/dt&gt;
+&lt;dd&gt;Where to render the template, such as a &lt;div&gt; element.&lt;/dd&gt;
+&lt;dt&gt;renderMode&lt;/dt&gt;
+&lt;dd&gt;When this is "replaceNode" the target element is replaced with the rendered output.&lt;/dd&gt;
+&lt;dd&gt;The rendered elements do not necessarily appear in the DOM immediately.&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h2&gt;Use&lt;/h2&gt;
+&lt;p&gt;Using &lt;code&gt;renderTemplate&lt;/code&gt; requires two things:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;code&gt;&amp;lt;script type="text/html"&amp;gt;&lt;/code&gt; tag with an id.&lt;/li&gt;
+&lt;li&gt;A call to &lt;code&gt;ko.renderTemplate&lt;/code&gt; somewhere in your JS.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;A simple example&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Our simple template&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;text/html&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;uniqueTemplateId&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;textarea&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;bind&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;textInput: value&amp;quot;&lt;/span&gt; &lt;span class="kr"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;form-control&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;/textarea&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Rendering this template in ko&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nx"&gt;ko&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;renderTemplate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="c1"&gt;// templateName&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;uniqueTemplateId&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="c1"&gt;// ViewModel&lt;/span&gt;
+    &lt;span class="c1"&gt;// just an empty object&lt;/span&gt;
+    &lt;span class="p"&gt;{},&lt;/span&gt;
+    &lt;span class="c1"&gt;// Options&lt;/span&gt;
+    &lt;span class="p"&gt;{},&lt;/span&gt;
+    &lt;span class="c1"&gt;// target&lt;/span&gt;
+    &lt;span class="k"&gt;this&lt;/span&gt;
+&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Here, we create a simple textarea template that is called and bound to no ViewModel and passed no options. This is great for simple use cases such as rendering some html in a &lt;code&gt;bootbox&lt;/code&gt; modal.&lt;/p&gt;
+&lt;h3&gt;A more complex example&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;A template for a comment input&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;text/html&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;comment&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;div&lt;/span&gt; &lt;span class="kr"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;input-group&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;input&lt;/span&gt; &lt;span class="kr"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;form-control registration-editor-comment&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;text&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;bind&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;value: nextComment, valueUpdate: &amp;#39;keyup&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;span&lt;/span&gt; &lt;span class="kr"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;input-group-btn&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;button&lt;/span&gt; &lt;span class="kr"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;btn btn primary&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;bind&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;click: $data.addComment,&lt;/span&gt;
+&lt;span class="s2"&gt;                                                 enable: $data.allowAddNext&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="nx"&gt;Add&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;/button&amp;gt;&lt;/span&gt;
+    &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;/span&amp;gt;&lt;/span&gt;
+  &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;/div&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Rendering this&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;Comment&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;self&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;ko&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;observable&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// ...&lt;/span&gt;
+
+&lt;span class="nx"&gt;ko&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;renderTemplate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="c1"&gt;// templateName&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;comment&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="c1"&gt;// viewModel&lt;/span&gt;
+    &lt;span class="nx"&gt;Comment&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="c1"&gt;// options&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="nx"&gt;afterRender&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;nodes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="c1"&gt;// resolve some deferred element&lt;/span&gt;
+      &lt;span class="c1"&gt;// or make a call to save the comment&lt;/span&gt;
+      &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="c1"&gt;// target&lt;/span&gt;
+    &lt;span class="k"&gt;this&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In this example, we bind the comment template to &lt;code&gt;Comment&lt;/code&gt; viewModel, and pass &lt;code&gt;renderTemplate&lt;/code&gt; an afterRender option that could resolve some deferred element, make some call, or do what ever needs to happen when this template renders.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;That sould be all the information you need to start using &lt;code&gt;renderTemplate&lt;/code&gt;. I definitely recommend reading the blog post I mentioned above. It provieds loads of information and much more nuanced examples.&lt;/p&gt;</summary><category term="knockout"></category><category term="javascript"></category></entry></feed>

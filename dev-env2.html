@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>One Stop Dev Shop pt. 2 — Atelic | Eric Barbour</title>
+	<meta name="description" content="Title: One Stop Dev Shop pt. 2; Date: 2015-08-17; Author: Eric Barbour">
+	<meta name="author" content="Eric Barbour">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="http://barbour-em.github.io/theme/html5.js"></script>
+		<![endif]-->
+	<link href="http://barbour-em.github.io/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+	<link href="http://barbour-em.github.io/theme/css/local.css" rel="stylesheet">
+	<link href="http://barbour-em.github.io/theme/css/pygments.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="http://barbour-em.github.io/">Atelic | Eric Barbour</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">One Stop Dev Shop pt. 2</h1>
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+			<h4 itemprop="name">Eric Barbour</h4>
+		</span>
+		<time datetime="2015-08-17T00:00:00-04:00" itemprop="datePublished">Mon 17 August 2015</time>
+	</div>
+	<div>
+		Category:
+		<span itemprop="articleSection">
+			<a href="http://barbour-em.github.io/category/dev-env-series.html" rel="category">Dev Env Series</a>
+		</span>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			<a href="http://barbour-em.github.io/tag/terminal.html" rel="tag">terminal</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="http://barbour-em.github.io/tag/tmux.html" rel="tag">tmux</a>
+		</span>
+	</div>
+	<div itemprop="articleBody" class="article-body"><h1>Part two: A terminal workflow</h1>
+<p>The command line is <em>awesome</em>; I can't think of a more productive and mature tool to do development work. Additionally, these days terminal-based tools are becoming more mainstream with CLIs for front-end package management and build tools. Quickly, it becomes a pain to manage all the different terminal windows that you have open for servers and shells etc.</p>
+<h2>Enter <code>Tmux</code></h2>
+<p><a href="https://tmux.github.io">Tmux</a>'s writers refer to it as a <strong>terminal multiplexer</strong> but it's really more like the greatest thing since <code>array_slice(bread)</code>. Essentially, tmux is window manager for terminal windows allowing you to split, tab, and navigate them. It also has some cool features like real time pair-programming. I was going to write a more detailed post about tmux, how I use and customize it but <a href="http://www.hamvocke.com/">Ham Vocke</a> wrote <a href="http://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/">this</a> great post and even uses parts of my <code>tmux.conf</code> so check it out, start using it and see how it can fit your needs!</p>
+<p>As always, this <code>.tmux.conf</code> file is synced with all of my machines and symlinked from my dotfiles directory to its location at <code>~/.tmux.conf</code> so I only have to think about writing it once. You can see my entire config file <a href="https://github.com/barbour-em/dotfiles/blob/master/home/.tmux.conf">here</a> but Ham does it a lot of justice in his post.</p>
+<h2>More</h2>
+<p>Here are some more resources about tmux if you're interested:</p>
+<ul>
+<li>Another <a href="www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/">post</a> by Ham Vocke about tmux.</li>
+<li>My <a href="https://www.reddit.com/r/unixporn/comments/3cn5gi/tmux_is_my_wm_on_os_x/">post</a> on <a href="https://www.reddit.com/r/unixporn">/r/unixporn</a> (SFW) about how I use tmux, specifically on OS X but it also applies to Linux</li>
+<li><a href="https://www.reddit.com/r/tmux">/r/tmux</a> has a pretty active community.</li>
+</ul>
+<hr />
+<p><em>This post is part 2 in a series of posts I am writing about maintaining a consistent and portable
+development envrionment across unix-like machines.</em></p>
+<hr /></div>
+	<hr>
+	<h2>Comments</h2>
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://barbour-em.github.io">Atelic | Eric Barbour</a></li>
+							<li><a href="http://barbour-em.github.io/feeds/all.atom.xml" type="application/atom+xml"><i class="fa fa-rss "></i> atom</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Author</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="mailto:&#101;&#098;&#097;&#114;&#098;&#111;&#117;&#114;&#064;&#114;&#101;&#100;&#104;&#097;&#116;&#046;&#099;&#111;&#109;">Eric Barbour</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Categories</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://barbour-em.github.io/category/Dev-Env-Series.html">Dev Env Series (2)</a></li>
+							<li><a href="http://barbour-em.github.io/category/Development.html">Development (1)</a></li>
+							<li><a href="http://barbour-em.github.io/category/Productivity.html">Productivity (1)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Links</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://barbour-em.github.io">My portfolio</a></li>
+							<li><a href="https://github.com/barbour-em">Github</a></li>
+							<li><a href="http://twitter.com/Ebarbour22">Twitter</a></li>
+							<li><a href="">Linkedin</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Eric Barbour 2014</p>
+			<p>Powered by Pelican</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>

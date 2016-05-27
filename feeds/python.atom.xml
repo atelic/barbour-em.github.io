@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Atelic | Eric Barbour</title><link href="http://barbour-em.github.io/" rel="alternate"></link><link href="http://barbour-em.github.io/feeds/python.atom.xml" rel="self"></link><id>http://barbour-em.github.io/</id><updated>2016-05-27T00:00:00-04:00</updated><entry><title>Using Knockoutjs' renderTemplate method</title><link href="http://barbour-em.github.io/knockout-render.html" rel="alternate"></link><published>2016-05-27T00:00:00-04:00</published><author><name>Eric Barbour</name></author><id>tag:barbour-em.github.io,2015-08-19:knockout-render.html</id><summary type="html">&lt;h1&gt;Knockout's renderTemplate method&lt;/h1&gt;
+&lt;p&gt;Knockoutjs supplies a &lt;code&gt;renderTemplate&lt;/code&gt; method, a way to dynamically generate this HTML at runtime and also data bind it to a separate view model. Unfortunately, this handy function is embarassingly underdocumented. &lt;a href="http://aboutcode.net/2012/11/15/twitter-bootstrap-modals-and-knockoutjs.html"&gt;This&lt;/a&gt; blog post does a good job of explaining its use but it covers a rather specific use case and can be information overload when learning about this function for the first time.&lt;/p&gt;
+&lt;h3&gt;&lt;code&gt;renderTemplate&lt;/code&gt; takes five parameters:&lt;/h3&gt;
+&lt;dl&gt;
+&lt;dt&gt;templateName&lt;/dt&gt;
+&lt;dd&gt;The ID of the template to render&lt;/dd&gt;
+&lt;dt&gt;viewModel&lt;/dt&gt;
+&lt;dd&gt;The view model to data bind to the template&lt;/dd&gt;
+&lt;dt&gt;options&lt;/dt&gt;
+&lt;dd&gt;Additional options passed to the rendering engine. We'll be providing an afterRender callback here.&lt;/dd&gt;
+&lt;dt&gt;target&lt;/dt&gt;
+&lt;dd&gt;Where to render the template, such as a &lt;div&gt; element.&lt;/dd&gt;
+&lt;dt&gt;renderMode&lt;/dt&gt;
+&lt;dd&gt;When this is "replaceNode" the target element is replaced with the rendered output.&lt;/dd&gt;
+&lt;dd&gt;The rendered elements do not necessarily appear in the DOM immediately.&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h2&gt;Use&lt;/h2&gt;
+&lt;p&gt;Using &lt;code&gt;renderTemplate&lt;/code&gt; requires two things:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;code&gt;&amp;lt;script type="text/html"&amp;gt;&lt;/code&gt; tag with an id.&lt;/li&gt;
+&lt;li&gt;A call to &lt;code&gt;ko.renderTemplate&lt;/code&gt; somewhere in your JS.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;A simple example&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Our simple template&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;text/html&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;uniqueTemplateId&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;textarea&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;bind&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;textInput: value&amp;quot;&lt;/span&gt; &lt;span class="kr"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;form-control&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;/textarea&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Rendering this template in ko&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nx"&gt;ko&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;renderTemplate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="c1"&gt;// templateName&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;uniqueTemplateId&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="c1"&gt;// ViewModel&lt;/span&gt;
+    &lt;span class="c1"&gt;// just an empty object&lt;/span&gt;
+    &lt;span class="p"&gt;{},&lt;/span&gt;
+    &lt;span class="c1"&gt;// Options&lt;/span&gt;
+    &lt;span class="p"&gt;{},&lt;/span&gt;
+    &lt;span class="c1"&gt;// target&lt;/span&gt;
+    &lt;span class="k"&gt;this&lt;/span&gt;
+&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Here, we create a simple textarea template that is called and bound to no ViewModel and passed no options. This is great for simple use cases such as rendering some html in a &lt;code&gt;bootbox&lt;/code&gt; modal.&lt;/p&gt;
+&lt;h3&gt;A more complex example&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;A template for a comment input&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;text/html&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;comment&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;div&lt;/span&gt; &lt;span class="kr"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;input-group&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;input&lt;/span&gt; &lt;span class="kr"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;form-control registration-editor-comment&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;text&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;bind&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;value: nextComment, valueUpdate: &amp;#39;keyup&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;span&lt;/span&gt; &lt;span class="kr"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;input-group-btn&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;button&lt;/span&gt; &lt;span class="kr"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;btn btn primary&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;bind&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;click: $data.addComment,&lt;/span&gt;
+&lt;span class="s2"&gt;                                                 enable: $data.allowAddNext&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="nx"&gt;Add&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;/button&amp;gt;&lt;/span&gt;
+    &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;/span&amp;gt;&lt;/span&gt;
+  &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;/div&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Rendering this&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;Comment&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;self&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;ko&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;observable&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// ...&lt;/span&gt;
+
+&lt;span class="nx"&gt;ko&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;renderTemplate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="c1"&gt;// templateName&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;comment&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="c1"&gt;// viewModel&lt;/span&gt;
+    &lt;span class="nx"&gt;Comment&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="c1"&gt;// options&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="nx"&gt;afterRender&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;nodes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="c1"&gt;// resolve some deferred element&lt;/span&gt;
+      &lt;span class="c1"&gt;// or make a call to save the comment&lt;/span&gt;
+      &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="c1"&gt;// target&lt;/span&gt;
+    &lt;span class="k"&gt;this&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In this example, we bind the comment template to &lt;code&gt;Comment&lt;/code&gt; viewModel, and pass &lt;code&gt;renderTemplate&lt;/code&gt; an afterRender option that could resolve some deferred element, make some call, or do what ever needs to happen when this template renders.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;That sould be all the information you need to start using &lt;code&gt;renderTemplate&lt;/code&gt;. I definitely recommend reading the blog post I mentioned above. It provieds loads of information and much more nuanced examples.&lt;/p&gt;</summary><category term="knockout"></category><category term="javascript"></category></entry><entry><title>One Stop Dev Shop pt. 1</title><link href="http://barbour-em.github.io/dev-env1.html" rel="alternate"></link><published>2016-05-27T00:00:00-04:00</published><author><name>Eric Barbour</name></author><id>tag:barbour-em.github.io,2015-08-18:dev-env1.html</id><summary type="html">&lt;h1&gt;Part one: Everything in one place&lt;/h1&gt;
+&lt;p&gt;A &lt;strong&gt;lot&lt;/strong&gt; of time and effort goes into creating a development environment that is productive and allows you to get down to work.
+Things get even more complicated when working on more than one machine. The goal of this series is to give you tips and a starting place for a unified environment.&lt;/p&gt;
+&lt;p&gt;I recently started a position where a Mac was provided and, after working exclusively on a GNU/Linux system,
+I needed to have a config that I could seemlessly use between both machines. So I started building my portable Unix dev environemnt.
+I wanted to share what goes into creating a complete and portable&lt;/p&gt;
+&lt;h2&gt;Git&lt;/h2&gt;
+&lt;p&gt;Git is intergal to almost every development team or company these days --- side note if you're not using version control yet, do it now, &lt;em&gt;seriously&lt;/em&gt; ---
+and it's what holds this environment together for a number of reasons.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Anything you will be working on with more than one computer needs to be in &lt;code&gt;git&lt;/code&gt;. Then just &lt;code&gt;git push&lt;/code&gt; from one and &lt;code&gt;git pull&lt;/code&gt; from the next and you're back to work. Done. Next.&lt;/li&gt;
+&lt;li&gt;Git is makes this system work. You need to have a way to have all your config files easily accessable and sync-able across machines. Git is that way.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Use a central repository&lt;/h3&gt;
+&lt;p&gt;"Dotfile" repos are a common convention for developers to maintain a single place for config files.
+However, they can be a lot more useful than that. &lt;a href="https://github.com/barbour-em/dotfiles"&gt;Mine&lt;/a&gt; holds things like wallpapers, screenshots, and various reminders about
+using some Unix tools. Determine what will be useful or convenient for you to have everywhere and throw it in there.&lt;/p&gt;
+&lt;p&gt;Clone this repository on all of your machines. Push and pull from it when changes are made. &lt;strong&gt;How easy was that?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;For files that will have to live outside of the cloned repository (e.g. .vimrc, .tmux.conf, etc), the easiest way to keep these version controlled is symlinking them from
+your repo, to where they have to reside. For example:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ln -s &lt;span class="nv"&gt;$HOME&lt;/span&gt;/dotfiles/.vimrc &lt;span class="nv"&gt;$HOME&lt;/span&gt;/.vimrc
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;All this means for you is that you will need to remember to commit and push these changes every once in a while to keep things up to date. Better yet, use a cron job to
+systematically do this for you.&lt;/p&gt;
+&lt;h3&gt;Configure git&lt;/h3&gt;
+&lt;p&gt;Okay, so we have all of our configurations and anything we want under git --- if you don't have any configs, don't worry, by the end of this post you will --- but let's
+customize this tool we will be using a lot to make it even faster to use.&lt;/p&gt;
+&lt;h4&gt;Aliases&lt;/h4&gt;
+&lt;p&gt;A lot of my day is spent working directly with git. At my shop, we use a &lt;a href="https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow"&gt;git-flow&lt;/a&gt;
+workflow which, for me, means a lot of branching, merging, commiting, and rebasing. Because of this, I find myself typing a lot of commands many, many times a day.
+Luckily, with git there is a way to cut down on the amount of typing you have to do to get stuff done.&lt;/p&gt;
+&lt;p&gt;Aliases are a &lt;em&gt;huge&lt;/em&gt; time-saver for my workflow. Here is my global &lt;code&gt;.gitconfig&lt;/code&gt; with a list of all the aliases I use.&lt;/p&gt;
+&lt;script src="https://gist.github.com/barbour-em/f13eab896dffca8c28b9.js"&gt;&lt;/script&gt;
+
+&lt;p&gt;The biggest ones are&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;undo&lt;/code&gt; which reverts the last commit and is a lot easier to remember&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;up&lt;/code&gt; which combines some of my most typed commands into two letters to update a branch&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ls&lt;/code&gt; which shows the log in a much nicer format and also takes a number of lines to stop (i.e. &lt;code&gt;git ls -10&lt;/code&gt; will show the last 10 commits)&lt;ul&gt;
+&lt;li&gt;This still doesn't beat &lt;a href="https://github.com/jonas/tig"&gt;tig&lt;/a&gt;, an awesome ncurses git interface that I would recommend to anyone&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Commit template&lt;/h4&gt;
+&lt;p&gt;In my &lt;code&gt;.gitconfig&lt;/code&gt; above, you'll also notice a commit template. This is something that I learned about recently but has already saved me a huge amount of time writing
+commit messages. Pretty commits are important, and often necessary depending on who you're contributing to, and setting up a template that encourages this behavior
+and has boilerplate written makes things a lot easier. Here is what my template looks like.&lt;/p&gt;
+&lt;script src="https://gist.github.com/barbour-em/3b40a805c431a42b6181.js"&gt;&lt;/script&gt;
+
+&lt;p&gt;Removing the octothorp (#) from the beginning of a line will make it show up in the commit and different commit stubs are already there. Just remove the comment,
+add a description, add a body below the line and boom. There are also guides for line length wraps for both halves.&lt;/p&gt;
+&lt;p&gt;I recommend that you take a look at what your commits usually, or should, look like and write one for yourself. Then, throw it in your &lt;code&gt;dotfiles&lt;/code&gt; push and start being more
+productive!&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;em&gt;This post is part 1 in a series of posts I am writing about maintaining a consistent and portable
+development envrionment across unix-like machines.&lt;/em&gt;&lt;/p&gt;
+&lt;hr /&gt;</summary><category term="devshop"></category><category term="git"></category><category term="syncing"></category></entry><entry><title>Instant text file syncing</title><link href="http://barbour-em.github.io/syncing-dropbox.html" rel="alternate"></link><published>2016-05-27T00:00:00-04:00</published><author><name>Eric Barbour</name></author><id>tag:barbour-em.github.io,2015-08-18:syncing-dropbox.html</id><summary type="html">&lt;h1&gt;Sync plain text files through Dropbox outside of the ~/Dropbox folder&lt;/h1&gt;
+&lt;p&gt;I love using &lt;a href="http://orgmode.org/"&gt;Org-mode&lt;/a&gt;, a plain text outlining and task management envrionment/tool/lifestyle. As such, I typically have a &lt;code&gt;~/org/&lt;/code&gt; directory on all of my machines which pretty much contains all of my life in them. In the past, I have generally kept them in sync by keeping them as a git repository pushing and pulling changes. This became problematic quickly; sometimes before leaving work I would forget to commit and push my changes from the day and my files at home are out of date. That's when I came up with this solution.&lt;/p&gt;
+&lt;h2&gt;What&lt;/h2&gt;
+&lt;p&gt;This method uses Dropbox, a tool I was using anyway, to instantly sync files that I want to keep out of the &lt;code&gt;~/Dropbox&lt;/code&gt; folder. In order to do this, I use symlinks from the external file or folder to &lt;code&gt;~/Dropbox/some/path&lt;/code&gt;. Then, when any change is made to the symlinked directory, changes will be monitored and synced through to all other machines.&lt;/p&gt;
+&lt;h2&gt;How&lt;/h2&gt;
+&lt;p&gt;To make this work, open up a terminal and enter the following commands:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ln -s /path/to/folder/that/you/want/to/sync/ ~/Dropbox/folder/name
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;That's it!&lt;/strong&gt; This link can be created on as many machines as you want, just link the directory from each computer to the same Dropbox folder. Note: for best results, start with the directory having the same contents on each computer so you don't overwrite anything. After that, carry on knowing that changes will be synced instantly.&lt;/p&gt;
+&lt;h2&gt;A word of caution&lt;/h2&gt;
+&lt;p&gt;While this method works great for links to external files and directories, things can get &lt;em&gt;pretty&lt;/em&gt; messed up if you attempt to symlink files to other files or directories within the Dropbox folder. While they may seem to work at first, Dropbox does not support this and it can lead to some pretty strange behavior. You can read more about this &lt;a href="http://www.paulingraham.com/dropbox-and-symlinks.html"&gt;here&lt;/a&gt;.&lt;/p&gt;</summary><category term="syncing"></category><category term="dropbox"></category></entry><entry><title>One Stop Dev Shop pt. 2</title><link href="http://barbour-em.github.io/dev-env2.html" rel="alternate"></link><published>2016-05-27T00:00:00-04:00</published><author><name>Eric Barbour</name></author><id>tag:barbour-em.github.io,2015-08-17:dev-env2.html</id><summary type="html">&lt;h1&gt;Part two: A terminal workflow&lt;/h1&gt;
+&lt;p&gt;The command line is &lt;em&gt;awesome&lt;/em&gt;; I can't think of a more productive and mature tool to do development work. Additionally, these days terminal-based tools are becoming more mainstream with CLIs for front-end package management and build tools. Quickly, it becomes a pain to manage all the different terminal windows that you have open for servers and shells etc.&lt;/p&gt;
+&lt;h2&gt;Enter &lt;code&gt;Tmux&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://tmux.github.io"&gt;Tmux&lt;/a&gt;'s writers refer to it as a &lt;strong&gt;terminal multiplexer&lt;/strong&gt; but it's really more like the greatest thing since &lt;code&gt;array_slice(bread)&lt;/code&gt;. Essentially, tmux is window manager for terminal windows allowing you to split, tab, and navigate them. It also has some cool features like real time pair-programming. I was going to write a more detailed post about tmux, how I use and customize it but &lt;a href="http://www.hamvocke.com/"&gt;Ham Vocke&lt;/a&gt; wrote &lt;a href="http://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/"&gt;this&lt;/a&gt; great post and even uses parts of my &lt;code&gt;tmux.conf&lt;/code&gt; so check it out, start using it and see how it can fit your needs!&lt;/p&gt;
+&lt;p&gt;As always, this &lt;code&gt;.tmux.conf&lt;/code&gt; file is synced with all of my machines and symlinked from my dotfiles directory to its location at &lt;code&gt;~/.tmux.conf&lt;/code&gt; so I only have to think about writing it once. You can see my entire config file &lt;a href="https://github.com/barbour-em/dotfiles/blob/master/home/.tmux.conf"&gt;here&lt;/a&gt; but Ham does it a lot of justice in his post.&lt;/p&gt;
+&lt;h2&gt;More&lt;/h2&gt;
+&lt;p&gt;Here are some more resources about tmux if you're interested:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Another &lt;a href="www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/"&gt;post&lt;/a&gt; by Ham Vocke about tmux.&lt;/li&gt;
+&lt;li&gt;My &lt;a href="https://www.reddit.com/r/unixporn/comments/3cn5gi/tmux_is_my_wm_on_os_x/"&gt;post&lt;/a&gt; on &lt;a href="https://www.reddit.com/r/unixporn"&gt;/r/unixporn&lt;/a&gt; (SFW) about how I use tmux, specifically on OS X but it also applies to Linux&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.reddit.com/r/tmux"&gt;/r/tmux&lt;/a&gt; has a pretty active community.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;em&gt;This post is part 2 in a series of posts I am writing about maintaining a consistent and portable
+development envrionment across unix-like machines.&lt;/em&gt;&lt;/p&gt;
+&lt;hr /&gt;</summary><category term="terminal"></category><category term="tmux"></category></entry></feed>
