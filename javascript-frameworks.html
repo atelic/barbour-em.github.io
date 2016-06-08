@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Comparing JavaScript Frameworks — Eric Barbour</title>
+	<meta name="description" content="Title: Comparing JavaScript Frameworks; Date: 2016-08-06; Author: Eric Barbour">
+	<meta name="author" content="Eric Barbour">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="http://barbour-em.github.io/theme/html5.js"></script>
+		<![endif]-->
+	<link href="http://barbour-em.github.io/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+	<link href="http://barbour-em.github.io/theme/css/local.css" rel="stylesheet">
+	<link href="http://barbour-em.github.io/theme/css/pygments.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="http://barbour-em.github.io/">Eric Barbour</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">Comparing JavaScript Frameworks</h1>
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+			<h4 itemprop="name">Eric Barbour</h4>
+		</span>
+		<time datetime="2016-08-06T00:00:00-04:00" itemprop="datePublished">Sat 06 August 2016</time>
+	</div>
+	<div>
+		Category:
+		<span itemprop="articleSection">
+			<a href="http://barbour-em.github.io/category/javascript.html" rel="category">Javascript</a>
+		</span>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			<a href="http://barbour-em.github.io/tag/javascript.html" rel="tag">javascript</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="http://barbour-em.github.io/tag/frameworks.html" rel="tag">frameworks</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="http://barbour-em.github.io/tag/react.html" rel="tag">react</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="http://barbour-em.github.io/tag/backbone.html" rel="tag">backbone</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="http://barbour-em.github.io/tag/angular.html" rel="tag">angular</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="http://barbour-em.github.io/tag/knockout.html" rel="tag">knockout</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="http://barbour-em.github.io/tag/mithril.html" rel="tag">mithril</a>
+		</span>
+	</div>
+	<div itemprop="articleBody" class="article-body"><h1>Motivation</h1>
+<p>There are an unbelievable amount of JavaScript frameworks in the world and it seems like there is a new one every week. At Fedora, we are evaluating adding a JavaScript framework to some of our applications, especially <a href="https://pagure.io/fedora-hubs">Fedora Hubs</a>. This is new for most of the team members as almost all Fedora apps use server side templating with little to no client-side templating. Since few team members have a preference on which framework to use and the desire to avoid picking one at random, I have compiled some notes on some of the most popular JS frameworks and ones that I have used in the past. These are my biased opinions either based on my experience with the framework or from reasearch I have done on them.</p>
+<h1>Overview of various JavaScript frameworks</h1>
+<h2><a href="https://angularjs.org/">AngularJS</a></h2>
+<p>AngularJs is an extremely popular framework and has been for some time. This makes it a pretty safe choice as it is likely that this popularity will continue. The newest version (2.0 just released from beta) represents a huge change over the first version. Angular 2.0 is written in TypeScript, which adds type checking and other enhancements to JavaScript. It also attempts to make developing for mobile easier and improves its initial router.</p>
+<p>The issue with choosing Angular at the moment is the strange limbo it seems to be in. Version 2.0 is very new and contains breaking changes but version 1.x will soon be obsolete. This is compounded by the difficulty associated with upgrading Angular applications from a previous version. Solutions <a href="https://angular.io/docs/ts/latest/guide/upgrade.html">are available</a>, it is a major overhaul to be done.</p>
+<h2>Angular2 Example  <small><a href="http://blog.scottlogic.com/2015/12/07/angular-2.html">source</a></small></h2>
+<p>A simple store of hard-coded todo items:</p>
+<div class="highlight"><pre><span></span><span class="kr">export</span> <span class="kr">class</span> <span class="nx">TodoItem</span> <span class="p">{</span>
+  <span class="nx">text</span><span class="o">:</span> <span class="nb">String</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="kr">class</span> <span class="nx">TodoStore</span> <span class="p">{</span>
+  <span class="nx">items</span><span class="o">:</span> <span class="nx">TodoItem</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span>
+     <span class="p">{</span><span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;Feed the cat&#39;</span><span class="p">},</span>
+     <span class="p">{</span><span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;Do the shopping&#39;</span><span class="p">}</span>
+  <span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>And the associated template:</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">template</span> <span class="na">ngFor</span> <span class="err">#</span><span class="na">item</span> <span class="err">[</span><span class="na">ngForOf</span><span class="err">]=&quot;</span><span class="na">items</span><span class="err">&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;view&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+</pre></div>
+
+
+<h2>Pros</h2>
+<ul>
+<li>Nice (less noisy) templating system</li>
+<li>Large ecosystem as it's probably the most popular.<ul>
+<li><a href="http://smashingboxes.com/media/W1siZiIsIjIwMTUvMTAvMjIvMTQvMDEvMjQvMjUvU2NyZWVuX1Nob3RfMjAxNV8xMF8yMl9hdF8yLjAwLjIwX1BNLnBuZyJdXQ/Screen%20Shot%202015-10-22%20at%202.00.20%20PM.png?sha=690cea3d157763dc">This chart</a> shows just how popular Angular is with developers compared to other major JavaScript frameworks.</li>
+</ul>
+</li>
+<li>A lot of functionality out of the box without the need for libs</li>
+<li>Typescript</li>
+</ul>
+<h2>Cons</h2>
+<ul>
+<li>Learning curve<ul>
+<li>Quick to get started, then it improves and deteriorates as you go along</li>
+</ul>
+</li>
+<li>A bit of a leaky abstraction (i.e. have to understand underlying model to understand the abstraction)</li>
+<li>New version coming out right now<ul>
+<li>Start with new one (in beta) or old one (that will be depreciated)</li>
+</ul>
+</li>
+<li>Long list of Angular-specific syntax</li>
+<li>New version has some lacking documentation</li>
+</ul>
+<h2><a href="http://backbonejs.org/">Backbone</a></h2>
+<p>Backbone.js is a JavaScript library that gives structure and organization to JavaScript applications. It is small and unopinionated, which, as a result, means that it may not do
+everything that you need right out of the box. One of the issues is that while it allows you to organize your application code, it makes no attempt at view templating, so another library is needed.</p>
+<h2>Example <small><a href="https://github.com/tastejs/todomvc/tree/gh-pages/examples/backbone">source</a></small></h2>
+<div class="highlight"><pre><span></span><span class="nx">app</span><span class="p">.</span><span class="nx">Todos</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="c1">// Reference to this collection&#39;s model.</span>
+    <span class="nx">model</span><span class="o">:</span> <span class="nx">app</span><span class="p">.</span><span class="nx">Todo</span><span class="p">,</span>
+
+    <span class="nx">completed</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">where</span><span class="p">({</span><span class="nx">completed</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
+    <span class="p">},</span>
+
+    <span class="nx">remaining</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">where</span><span class="p">({</span><span class="nx">completed</span><span class="o">:</span> <span class="kc">false</span><span class="p">});</span>
+    <span class="p">},</span>
+
+    <span class="nx">nextOrder</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">length</span> <span class="o">?</span> <span class="k">this</span><span class="p">.</span><span class="nx">last</span><span class="p">().</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;order&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">},</span>
+
+    <span class="nx">comparator</span><span class="o">:</span> <span class="s1">&#39;order&#39;</span>
+<span class="p">});</span>
+<span class="c1">// The associated model</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">Todo</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="c1">// Default attributes for the todo</span>
+    <span class="nx">defaults</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="nx">completed</span><span class="o">:</span> <span class="kc">false</span>
+    <span class="p">},</span>
+    <span class="nx">toggle</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">save</span><span class="p">({</span>
+            <span class="nx">completed</span><span class="o">:</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;completed&#39;</span><span class="p">)</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h3>Pros</h3>
+<ul>
+<li>Small and fast</li>
+<li>Gives the developer absolute control over what other components of the application to add or leave out</li>
+</ul>
+<h3>Cons</h3>
+<ul>
+<li>No data binding</li>
+<li>A number of dependencies depending on if you want:<ul>
+<li>routing</li>
+<li>templating</li>
+<li>data binding</li>
+<li>async events</li>
+<li>underscore</li>
+</ul>
+</li>
+</ul>
+<h2><a href="https://facebook.github.io/react/">React</a></h2>
+<p>React descibes itself as "A JavaScript library for building user interfaces," which basically means it is just the V in MVC. It provides the view layer only and "makes no assumptions about the rest of your technology stack."</p>
+<p>React has steadily been rising in popularity over the past year or two and there has grown a large following and ecosystem of plugins around it. A notable example of this is <a href="https://facebook.github.io/flux/">Flux</a> which provides the application architecture layer to hook into React's view layer. React feels like a good choice for new or existing projects. Its modular nature makes it easier than others to begin implementing new UI in React or slowly moving other elements over.</p>
+<h3>Example (with JSX) <small><a href="https://facebook.github.io/react/docs/tutorial.html">source</a></small></h3>
+<div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">HelloMessage</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+  <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="nx">Hello</span> <span class="p">{</span><span class="nx">Page</span> <span class="nx">on</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/div&gt;;</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+<span class="nx">React</span><span class="p">.</span><span class="nx">renderComponent</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">HelloMessage</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;John&quot;</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nx">mountNode</span><span class="p">);</span>
+</pre></div>
+
+
+<h3>Pros</h3>
+<ul>
+<li><a href="https://facebook.github.io/react/docs/jsx-in-depth.html">JSX</a> - HTML-like syntax that compiles to JS<ul>
+<li>Which means errors at compile time itself, rather than on runtime like Angular</li>
+</ul>
+</li>
+<li>Lightweight and a simple API. Don't need to read source code to understand what's happening</li>
+<li>Most of it is just plain JS or close to it. Less doc reading</li>
+<li>Binding markup doesn't changed bases on one vs two way<ul>
+<li>Which feels more JavaScripty</li>
+</ul>
+</li>
+<li>ECMAScript 6 compatable</li>
+</ul>
+<h3>Cons</h3>
+<ul>
+<li>Library not a framework (no router nor model management)<ul>
+<li>Pick and choose what you want to use with it (can be daunting)</li>
+<li>One needs to have some degree of experience in picking libraries to fulfill these needs.</li>
+</ul>
+</li>
+<li>Learning curve<ul>
+<li>A bit difficult to pick up at first</li>
+</ul>
+</li>
+<li>Not as many developers with experiences as a whole</li>
+</ul>
+<h1><a href="http://knockoutjs.com/">Knockout</a></h1>
+<p>Knockout is a library heavily focused on data binding. It is not an MVC framework per se, but idiomatic Knockout code uses the similar concept of view models, which are a combination of model and controller layers in a single object. Its templates are written in HTML with <code>data-bind</code> attributes similar to that of Angular; this has the disadvantage of making debugging difficult at times but the advantage of sophisticated and nested UIs.</p>
+<p>However, Knockout is only for two-way data binding, it automatically refreshes the UI as the data changes. This can lead to severe performance issues if the developer doesn't entirely grok the way Knockout does UI refreshes. It this means that if hash based routing or UI components are needed, another library will have to be included.</p>
+<h2>Example</h2>
+<div class="highlight"><pre><span></span>   <span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;knockout.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">span</span> <span class="na">data-bind</span><span class="o">=</span><span class="s">&quot;text: hello&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+                <span class="kd">var</span> <span class="nx">viewModel</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">hello</span> <span class="o">=</span> <span class="nx">ko</span><span class="p">.</span><span class="nx">observable</span><span class="p">(</span><span class="s2">&quot;Hello, World!&quot;</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="nx">ko</span><span class="p">.</span><span class="nx">applyBindings</span><span class="p">(</span><span class="nx">viewModel</span><span class="p">;</span>
+            <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+
+
+<h2>Pros</h2>
+<ul>
+<li>Lightweight (20kb with HTTP compression)</li>
+<li>The easiest on this list to pick up in my opinion with good documentation and interactive tutorial system.</li>
+<li>Declarative two-way binding enables things like UI events propagation, visible true/false and dynamic UI.</li>
+<li>Dependencies are handled through a dependency graph which targets specific data as opposed to updating entire models when data changes</li>
+</ul>
+<h2>Cons</h2>
+<ul>
+<li>Not a full MVC framework, but more of a versitile data binding library.</li>
+<li>Can have performance issues if code isn't written with underlying implemtation in mind.</li>
+<li>All javascript variables and arrays are functions.</li>
+<li>HTML views can get messy as declarative bindings increase</li>
+</ul>
+<h1><a href="http://mithril.js.org/index.html">Mithril</a></h1>
+<p>Mithril is a full blown client-side MVC framework that uses virtual DOM diffing similar to that of React, compilable templates, and a smart auto redraw system. The performance numbers on its web page are very flattering as well. Mithril is interesting because it has a very small api with only 24 built-in functions, and yet covers the same range as Angular in terms of MVC. While it doesn't have a large user base, it has been used on sites like <a href="http://melpa.org">melpa.org</a>.</p>
+<h2>Example  <small><a href="https://github.com/jpmonette/todomvc-mithril/tree/master/js">source</a></small></h2>
+<div class="highlight"><pre><span></span><span class="nx">app</span><span class="p">.</span><span class="nx">viewName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ctrl</span><span class="p">,</span> <span class="nx">task</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">m</span><span class="p">(</span><span class="s1">&#39;li&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="kr">class</span><span class="o">:</span> <span class="nx">task</span><span class="p">.</span><span class="nx">completed</span><span class="p">()</span> <span class="o">?</span> <span class="s1">&#39;completed&#39;</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">},</span> <span class="p">[</span>
+        <span class="nx">m</span><span class="p">(</span><span class="s1">&#39;.view&#39;</span><span class="p">,</span> <span class="p">[</span>
+            <span class="nx">m</span><span class="p">(</span><span class="s1">&#39;input.toggle[type=checkbox]&#39;</span><span class="p">,</span> <span class="p">{</span>
+                <span class="nx">onclick</span><span class="o">:</span> <span class="nx">m</span><span class="p">.</span><span class="nx">withAttr</span><span class="p">(</span><span class="s1">&#39;checked&#39;</span><span class="p">,</span> <span class="nx">task</span><span class="p">.</span><span class="nx">completed</span><span class="p">),</span>
+                <span class="nx">checked</span><span class="o">:</span> <span class="nx">task</span><span class="p">.</span><span class="nx">completed</span><span class="p">()</span>
+            <span class="p">}),</span>
+            <span class="nx">m</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="nx">task</span><span class="p">.</span><span class="nx">title</span><span class="p">()),</span>
+            <span class="nx">m</span><span class="p">(</span><span class="s1">&#39;button.destroy&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">onclick</span><span class="o">:</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">remove</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">ctrl</span><span class="p">,</span> <span class="nx">index</span><span class="p">)})</span>
+        <span class="p">]),</span>
+        <span class="nx">m</span><span class="p">(</span><span class="s1">&#39;input.edit&#39;</span><span class="p">)</span>
+    <span class="p">]);</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<h2>Pros</h2>
+<ul>
+<li>Extremely small API, learning curve, and file size (7.8 kB!)</li>
+<li>Fast performance with virtual DOM diffing</li>
+<li>Flexibe in implementation</li>
+<li>Its uncompiled templates run natively in the browser as compared to React's which do not</li>
+</ul>
+<h2>Cons</h2>
+<ul>
+<li>Small user base</li>
+<li>Difficult to scale - code can become spaghetti easily if not careful.</li>
+<li>Not flexible - render a Virtual DOM and assign event handlers with a few nice methods for common patterns like HTTP Requests and Promises</li>
+<li>Frankly ugly templating</li>
+</ul>
+<h2>Honorable mentions</h2>
+<p>It is imposible for me to have touched on all of the frameworks out there so here is a list of MVC frameworks or libraries that I didn't have time to touch on but have heard good things about:</p>
+<ul>
+<li><a href="https://aurelia.io/">Aurelia</a></li>
+<li><a href="https://emberjs.com/">Ember</a></li>
+<li><a href="https://www.meteor.com/">Meteor</a></li>
+<li><a href="https://www.polymer-project.org/1.0/">Polymer</a></li>
+<li><a href="http://riotjs.com/">Riot</a></li>
+<li><a href="https://vuejs.org/">Vue</a></li>
+</ul>
+<h1>Conclusions</h1>
+<p>So, after going over all of these frameworks, it seems apparent that the one that will work best for you largely depends on the type of project that you are working on. If you just want to better organize your jQuery application, Backbone might be what you need. If you are spinning up a small app or don't need to worry about other developers learning the framework, it might be best to use Knockout or Mithril since you can get started with them very quickly. For large or enterpise applications with a large number of developers, I think either Angular or React+[Flux|Redux] is the best choice. Additionally, while the jury is still out on Angular2, it might be best to evaluate the the changes made in the new version and if you want to take the risk. </p></div>
+	<hr>
+	<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ebfender22lmao'; 
+    var disqus_title = 'Comparing JavaScript Frameworks';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://barbour-em.github.io">Eric Barbour</a></li>
+							<li><a href="http://barbour-em.github.io/feeds/all.atom.xml" type="application/atom+xml"><i class="fa fa-rss "></i> atom</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Author</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="mailto:&#101;&#098;&#097;&#114;&#098;&#111;&#117;&#114;&#064;&#114;&#101;&#100;&#104;&#097;&#116;&#046;&#099;&#111;&#109;">Eric Barbour</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Categories</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://barbour-em.github.io/category/Dev-Env-Series.html">Dev Env Series (2)</a></li>
+							<li><a href="http://barbour-em.github.io/category/Development.html">Development (1)</a></li>
+							<li><a href="http://barbour-em.github.io/category/Javascript.html">Javascript (1)</a></li>
+							<li><a href="http://barbour-em.github.io/category/Productivity.html">Productivity (1)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Links</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://barbour-em.github.io">My portfolio</a></li>
+							<li><a href="https://github.com/barbour-em">Github</a></li>
+							<li><a href="http://twitter.com/Ebarbour22">Twitter</a></li>
+							<li><a href="">Linkedin</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Eric Barbour 2014</p>
+			<p>Powered by Pelican</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>
